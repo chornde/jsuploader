@@ -103,7 +103,7 @@ let uploader = {
         }, false);
         xhr.onreadystatechange = function(e) {
             if (xhr.readyState === 4) {
-                progress.className = (xhr.status === 200 ? 'success' : 'failure');
+                progress.classList.add(xhr.status === 200 ? 'success' : 'failure');
             }
         };
     },

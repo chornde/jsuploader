@@ -16,14 +16,36 @@
 </form>
 
 <div class="uploadGrid">
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
-    <div class="uploadSlot"><p></p><img src="" /></div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
+    <div class="uploadSlot">
+        <p class="progress"></p>
+        <img src="" />
+        <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
+    </div>
 </div>
 
 </body>

@@ -1,0 +1,10 @@
+#uploadForm { text-align: center; }
+#uploadArea { display:none; min-width:120px; min-height:120px; padding:20px; border:4px dashed #ccc; border-radius:10px; background: url('uploadarea.png') center center no-repeat; }
+#uploadArea.hover { border:4px dashed #999; }
+.uploadGrid { display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 10px; }
+.uploadSlot { min-width:50px; min-height:150px; border:1px solid #999; background: url('slotadd.png') center center no-repeat #fffdce; text-align: center; }
+.uploadSlot p { display:none; width: 0; height: 3px; margin:0 0 10px 0; background-color:purple; transition: width 1s ease; }
+.uploadSlot img { display:none; max-width: 75%; }
+.uploadSlot.reserved { background-image: none; }
+.uploadSlot.reserved img { display:inline; }
+.uploadSlot.reserved p { display:block; }

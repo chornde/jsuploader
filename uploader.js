@@ -1,20 +1,24 @@
 /**
     todo:
-    - show upload area
-    - distribute events
-    - check max size and file types
-    - check free slots; reserve
-    - preview in the next free slot
-    - progress bar in the next free slot
-    - disable inputs on upload
+    + show upload area
+    + distribute events
+    + check free slots; reserve
+    + check max size and file types
+    + preview in the next free slot
+    + progress bar in the next free slot
+    X disable inputs on upload; no, why?
     - reload page after all images are uploaded
     - add buttons for default, delete, rotate
 
-    mostly based on https://www.sitepoint.com/html5-javascript-file-upload-progress-bar/
+    inspired by https://www.sitepoint.com/html5-javascript-file-upload-progress-bar/
  */
 let uploader = {
 
+    fileTypes: ['image/jpeg', 'image/png'],
+    fileMaxsize: 8000000,
+
     init: function(){
+        uploader.form = document.getElementById('uploadForm');
         uploader.element = document.getElementById('uploadElement');
         uploader.submitter = document.getElementById('uploadSubmit');
         uploader.area = document.getElementById('uploadArea');
@@ -34,14 +38,16 @@ let uploader = {
 
         let xhr = new XMLHttpRequest();
         if (xhr.upload) {
+            element.style.display = 'none';
             area.style.display = 'block';
+            area.addEventListener('click', function(){ uploader.element.click(); }, false);
             area.addEventListener('dragover', uploader.dragVisual, false);
             area.addEventListener('dragleave', uploader.dragVisual, false);
             area.addEventListener('drop', uploader.prepareUpload, false);
         }
 
         uploader.getSlots().forEach(slot => {
-            slot.querySelector('a').onclick = function(){
+            slot.onclick = function(){
                 uploader.element.click();
             };
         });
@@ -70,24 +76,34 @@ let uploader = {
         let files = e.target.files || e.dataTransfer.files;
         [...files].forEach(file => {
             let freeSlots = uploader.freeSlots();
-            if(freeSlots.length > 0 && file.type.indexOf("image") === 0){
-                let freeSlot = freeSlots[0];
-                freeSlot.classList.add('reserved');
-                uploader.showPreview(freeSlot, file);
-                uploader.doUpload(file, freeSlot);
+            if(freeSlots.length > 0){
+                if(file.type.indexOf('image') === 0){
+                    if(uploader.fileTypes.indexOf(file.type) >= 0){
+                        if(file.size <= uploader.fileMaxsize){
+                            let freeSlot = freeSlots[0];
+                            freeSlot.classList.add('reserved');
+                            uploader.showPreview(freeSlot, file);
+                            uploader.doUpload(file, freeSlot);
+                        }
+                        else { alert('Die Datei ist zu groß: '+file.name); }
+                    }
+                    else { alert('Die Datei ist nicht kompatibel: '+file.type); }
+                }
+                else { alert('Diese Datei ist kein Bild: '+file.name); }
             }
+            else { alert('Die maximale Anzahl an Bildern ist erreicht: '+file.name); }
         });
     },
 
     showProgress: function(xhr, slot){
         let progress = slot.querySelector('p');
-        xhr.upload.addEventListener("progress", function(e) {
+        xhr.upload.addEventListener('progress', function(e) {
             let pc = parseInt(e.loaded / e.total * 100);
-            progress.style.backgroundPosition = pc + "% 0";
+            progress.style.width = pc + '%';
         }, false);
         xhr.onreadystatechange = function(e) {
             if (xhr.readyState === 4) {
-                progress.className = (xhr.status === 200 ? "success" : "failure");
+                progress.className = (xhr.status === 200 ? 'success' : 'failure');
             }
         };
     },
@@ -95,7 +111,7 @@ let uploader = {
     doUpload: function(file, slot){
         var xhr = new XMLHttpRequest();
         uploader.showProgress(xhr, slot);
-        xhr.open("POST", document.getElementById("upload").action, true);
+        xhr.open("POST", uploader.form.action, true);
         xhr.setRequestHeader("X_FILENAME", file.name);
         xhr.send(file);
     },

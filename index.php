@@ -9,7 +9,7 @@
 </head>
 <body>
 <pre><?php var_dump($_GET, $_POST, $_FILES); ?></pre>
-<form id="uploadForm" action="index.php" method="post" enctype="multipart/form-data">
+<form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
     <input id="uploadElement" type="file" name="files[]" multiple="multiple" />
     <input id="uploadSubmit" type="submit">
     <p id="uploadArea">Bilder mit der Maus hier reinziehen oder hier klicken</p>

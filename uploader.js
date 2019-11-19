@@ -23,7 +23,6 @@ let uploader = {
         uploader.submitter = document.getElementById('uploadSubmit');
         uploader.area = document.getElementById('uploadArea');
         uploader.adaptListeners(uploader.submitter, uploader.element, uploader.area);
-        console.log(uploader.freeSlots());
     },
 
     dragVisual: function(e) {
@@ -96,7 +95,7 @@ let uploader = {
     },
 
     showProgress: function(xhr, slot){
-        let progress = slot.querySelector('p');
+        let progress = slot.querySelector('p.progress');
         xhr.upload.addEventListener('progress', function(e) {
             let pc = parseInt(e.loaded / e.total * 100);
             progress.style.width = pc + '%';
@@ -109,11 +108,12 @@ let uploader = {
     },
 
     doUpload: function(file, slot){
-        var xhr = new XMLHttpRequest();
+        let formData = new FormData;
+        formData.append('files[]', file, file.name);
+        let xhr = new XMLHttpRequest();
         uploader.showProgress(xhr, slot);
-        xhr.open("POST", uploader.form.action, true);
-        xhr.setRequestHeader("X_FILENAME", file.name);
-        xhr.send(file);
+        xhr.open('POST', uploader.form.action, true);
+        xhr.send(formData);
     },
 
 };

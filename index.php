@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -8,7 +9,9 @@
     <script src="uploader.js"></script>
 </head>
 <body>
-<pre><?php var_dump($_GET, $_POST, $_FILES); ?></pre>
+
+<pre><?php var_dump($_SESSION); ?></pre>
+
 <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
     <input id="uploadElement" type="file" name="files[]" multiple="multiple" />
     <input id="uploadSubmit" type="submit">
@@ -42,7 +45,7 @@
         <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
     </div>
     <div class="uploadSlot">
-        <p class="progress"></p>
+        <p class="progress ready"></p>
         <img src="" />
         <p class="icons"><a href="" title="Startbild">➊</a> <a href="" title="rotieren">➥</a> <a href="" title="löschen">✖</a></p>
     </div>

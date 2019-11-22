@@ -16,6 +16,7 @@ let uploader = {
 
     fileTypes: ['image/jpeg', 'image/png'],
     fileMaxsize: 8000000,
+    currentUploads: 0,
 
     init: function(){
         uploader.form = document.getElementById('uploadForm');
@@ -54,7 +55,11 @@ let uploader = {
 
     // always fresh
     getSlots: function(){
-        return [...document.querySelectorAll('.uploadSlot')];
+        slots = [...document.querySelectorAll('.uploadSlot')];
+        slots.forEach(function(slot, idx){
+            slot.setAttribute('data-index', idx);
+        });
+        return slots;
     },
 
     freeSlots: function(){
@@ -73,7 +78,7 @@ let uploader = {
     prepareUpload: function(e){
         uploader.dragVisual(e);
         let files = e.target.files || e.dataTransfer.files;
-        [...files].forEach(file => {
+        [...files].forEach(function(file, idx){
             let freeSlots = uploader.freeSlots();
             if(freeSlots.length > 0){
                 if(file.type.indexOf('image') === 0){
@@ -81,8 +86,9 @@ let uploader = {
                         if(file.size <= uploader.fileMaxsize){
                             let freeSlot = freeSlots[0];
                             freeSlot.classList.add('reserved');
-                            uploader.showPreview(freeSlot, file);
-                            uploader.doUpload(file, freeSlot);
+                            // uploader.showPreview(freeSlot, file);
+                            uploader.doUpload(file, freeSlot, freeSlot.getAttribute('data-index'));
+                            uploader.currentUploads++;
                         }
                         else { alert('Die Datei ist zu groß: '+file.name); }
                     }
@@ -103,13 +109,21 @@ let uploader = {
         xhr.onreadystatechange = function(e) {
             if (xhr.readyState === 4) {
                 progress.classList.add(xhr.status === 200 ? 'success' : 'failure');
+                uploader.currentUploads--;
+                uploader.performReady();
             }
         };
     },
 
-    doUpload: function(file, slot){
+    performReady: function(){
+        if(uploader.currentUploads === 0) setTimeout(function(){ window.location.reload(true); }, 1000);
+    },
+
+    doUpload: function(file, slot, idx){
         let formData = new FormData;
-        formData.append('files[]', file, file.name);
+        formData.append('action', 'add');
+        formData.append('slot', idx);
+        formData.append('images[]', file, file.name);
         let xhr = new XMLHttpRequest();
         uploader.showProgress(xhr, slot);
         xhr.open('POST', uploader.form.action, true);

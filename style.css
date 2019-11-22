@@ -11,7 +11,7 @@
 .uploadSlot p.icons { display:none; grid-template-columns: repeat(3, 1fr); width:50%; margin:auto; }
 .uploadSlot p.icons a { font-size: 20px; text-decoration: none; }
 .uploadSlot img { display:none; max-width: 75%; }
-.uploadSlot.reserved { background-image: none; }
+.uploadSlot.reserved { background-image: url('slotreserved.png'); }
 .uploadSlot.reserved img { display:inline; }
 .uploadSlot.reserved p.progress { display:block; }
-.uploadSlot.reserved p.icons { display:grid; }
+.uploadSlot.ready p.icons { display:grid; }
